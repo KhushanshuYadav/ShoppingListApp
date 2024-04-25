@@ -200,12 +200,25 @@ fun ShoppingItemEditor(item:ShoppingItems,onEditComplete:(String,Int)->Unit){
     {
 
         Column {
-            BasicTextField(value = editedName, onValueChange = {editedName=it}, singleLine=true, modifier= Modifier
+            BasicTextField(
+                value = editedName,
+                onValueChange = {editedName=it},
+                singleLine=true, modifier= Modifier
                 .wrapContentSize()
-                .padding(8.dp), textStyle = LocalTextStyle.current.copy(color = Color.White,fontSize = 16.sp) )
-            BasicTextField(value = editedQuantity, onValueChange = {editedQuantity=it}, singleLine=true, modifier= Modifier
+                .padding(8.dp),
+                textStyle = LocalTextStyle.current.copy(color = Color.White,fontSize = 16.sp)
+            )
+            BasicTextField(
+                value = editedQuantity,
+                onValueChange = {editedQuantity=it},
+                singleLine=true, modifier= Modifier
                 .wrapContentSize()
-                .padding(8.dp),textStyle = LocalTextStyle.current.copy(color = Color.White,fontSize = 16.sp) )
+                .padding(8.dp),
+                textStyle = LocalTextStyle.current.copy(color = Color.White,fontSize = 16.sp),
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Number // Set keyboard type to numeric
+                )
+            )
 
         }
 
