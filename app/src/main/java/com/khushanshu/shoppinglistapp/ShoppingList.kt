@@ -1,6 +1,7 @@
 package com.khushanshu.shoppinglistapp
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -8,9 +9,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
@@ -30,7 +33,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.dp;
 
 
 //data class to store data of shopping list item
@@ -41,16 +44,16 @@ data class ShoppingItems(val id:Int,var name:String, var quantity:Int, var isBei
 fun ShoppingListApp(){
     Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center){
 
-        var sItems by remember{ mutableStateOf(listOf<ShoppingItems>()) }
+        var sItems by remember{ mutableStateOf(listOf<ShoppingItems>()) };
         //now our list of items is modifiable as it is now a state which can be changed
 
-        var showDialog by remember{ mutableStateOf(false) }
+        var showDialog by remember{ mutableStateOf(false) };
         //tells or stores the state of dialog that is it is opened or not
 
-        var itemName by remember{ mutableStateOf("") }
+        var itemName by remember{ mutableStateOf("") };
         //it represents the name of item  that we will enter state as we can also edit it later
 
-        var itemQuantity by remember{ mutableStateOf("") }
+        var itemQuantity by remember{ mutableStateOf("") };
         //it represents the quantity of item that we will enter state as we can also edit it later
 
         Button( onClick = {showDialog=true}, modifier = Modifier.align(Alignment.CenterHorizontally) ){
@@ -130,6 +133,43 @@ fun ShoppingListApp(){
 
             )
         }
+
+    }
+}
+
+
+@Composable
+fun ShoppingItemEditor(item:ShoppingItems,onEditComplete:(String,Int)->Unit){
+    var editedName by remember{ mutableStateOf(item.name) }
+    var editedQuantity by remember{ mutableStateOf(item.quantity.toString()) }
+    var isEditing by remember { mutableStateOf(item.isBeingEdited) } //true if item is being edited
+    Row(modifier= Modifier
+        .fillMaxWidth()
+        .background(color = Color.White)
+        .padding(8.dp), horizontalArrangement = Arrangement.SpaceEvenly ){
+
+        Column {
+            BasicTextField(value = editedName, onValueChange = {editedName=it}, singleLine=true, modifier= Modifier
+                .wrapContentSize()
+                .padding(8.dp)){}
+            BasicTextField(value = editedQuantity, onValueChange = {editedQuantity=it}, singleLine=true, modifier= Modifier
+                .wrapContentSize()
+                .padding(8.dp)){}
+
+        }
+
+        Button(
+            onClick = {
+                isEditing=false;
+                onEditComplete(editedName,editedQuantity.toIntOrNull()?:1);  //set to one if quantity entered is not a int after conversion
+
+            })
+        {
+            Text("Save")
+
+        }
+
+
 
     }
 }
