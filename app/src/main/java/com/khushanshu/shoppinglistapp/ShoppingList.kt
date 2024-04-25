@@ -123,11 +123,12 @@ fun ShoppingListApp(){
 
         if(showDialog){
             AlertDialog(
-                onDismissRequest = { showDialog=false },
+                onDismissRequest = { showDialog=false  },//put itemName="" amd itemQunatity="" if want to reset both on dismissal
                 confirmButton = {
                                 Row(modifier = Modifier
                                     .padding(8.dp)
-                                    .fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                                    .fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween)
+                                {
                                     Button(onClick = {
                                         if(itemName.isNotBlank()){
                                             val newItem=ShoppingItems(id=sItems.size+1,name=itemName, quantity =itemQuantity.toInt());
@@ -145,8 +146,7 @@ fun ShoppingListApp(){
                                         itemName="";
                                         itemQuantity="";
                                         showDialog=false;
-                                    }
-                                    ) {
+                                    }) {
                                         Text(text = "Cancel")
 
                                     }
