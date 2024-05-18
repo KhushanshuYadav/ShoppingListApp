@@ -31,6 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -47,7 +48,8 @@ data class ShoppingItems(val id:Int,var name:String, var quantity:Int, var isBei
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ShoppingListApp(){
-    var sItems by remember{ mutableStateOf(listOf<ShoppingItems>()) };
+    //rememberSaveable saves state from rotation
+    var sItems by rememberSaveable { mutableStateOf(listOf<ShoppingItems>()) };
     //now our list of items is modifiable as it is now a state which can be changed
 
     var showDialog by remember{ mutableStateOf(false) };
@@ -204,16 +206,16 @@ fun ShoppingItemEditor(item:ShoppingItems,onEditComplete:(String,Int)->Unit){
                 value = editedName,
                 onValueChange = {editedName=it},
                 singleLine=true, modifier= Modifier
-                .wrapContentSize()
-                .padding(8.dp),
+                    .wrapContentSize()
+                    .padding(8.dp),
                 textStyle = LocalTextStyle.current.copy(color = Color.White,fontSize = 16.sp)
             )
             BasicTextField(
                 value = editedQuantity,
                 onValueChange = {editedQuantity=it},
                 singleLine=true, modifier= Modifier
-                .wrapContentSize()
-                .padding(8.dp),
+                    .wrapContentSize()
+                    .padding(8.dp),
                 textStyle = LocalTextStyle.current.copy(color = Color.White,fontSize = 16.sp),
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Number // Set keyboard type to numeric
