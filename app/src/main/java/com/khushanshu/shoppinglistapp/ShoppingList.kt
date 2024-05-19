@@ -36,6 +36,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp;
@@ -163,7 +164,8 @@ fun ShoppingListApp(){
                             onValueChange={itemName=it},
                             modifier= Modifier
                                 .fillMaxWidth()
-                                .padding(8.dp)
+                                .padding(8.dp),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, capitalization = KeyboardCapitalization.Sentences)
 
                         )
 
@@ -208,7 +210,8 @@ fun ShoppingItemEditor(item:ShoppingItems,onEditComplete:(String,Int)->Unit){
                 singleLine=true, modifier= Modifier
                     .wrapContentSize()
                     .padding(8.dp),
-                textStyle = LocalTextStyle.current.copy(color = Color.White,fontSize = 16.sp)
+                textStyle = LocalTextStyle.current.copy(color = Color.White,fontSize = 16.sp),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, capitalization = KeyboardCapitalization.Sentences)
             )
             BasicTextField(
                 value = editedQuantity,
